@@ -55,14 +55,16 @@ def procesa_pagina(driver,entrada):
             pickle.dump(procesados, fp)
 
 def main():
-    driver = webdriver.Chrome()
-    login(driver)
+    options = webdriver.ChromeOptions()
+    # options.add_argument('--headless')
     while(True):
+        driver = webdriver.Chrome(options=options)
+        login(driver)
         for enlace in cf.OFFERS:
             procesa_pagina(driver, enlace)
+        driver.quit()
         sleep(30)
 
-    driver.quit()
 
 if __name__ == '__main__':
     main()
