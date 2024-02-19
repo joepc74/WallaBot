@@ -9,7 +9,7 @@ import os,pickle,telebot, sys
 
 tb = telebot.TeleBot(cf.telegram_key)
 
-primervideo=True
+# cargamos la lista de urls procesadas
 procesados=[]
 if (os.path.isfile('procesados.pkl')):
     try:
@@ -21,8 +21,10 @@ if (os.path.isfile('procesados.pkl')):
 
 
 def login(driver):
+    # entramos en la web
     driver.get('https://es.wallapop.com/')
     sleep(2)
+    #aceptamos los terminos y condiciones
     accept_terms_button = driver.find_element("id","onetrust-accept-btn-handler")
     if(accept_terms_button is not None):
         accept_terms_button.send_keys(Keys.RETURN)
