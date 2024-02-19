@@ -32,27 +32,30 @@ def procesa_pagina(driver,entrada):
 
     driver.get(entrada['url'])
 
-    # sleep(10)
-    # saltar_terms_button = driver.find_element(By.LINK_TEXT,"Saltar")
-    # saltar_terms_button.click()
-    WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CLASS_NAME,'ItemCardList__item')))
+    try:
+        # sleep(10)
+        # saltar_terms_button = driver.find_element(By.LINK_TEXT,"Saltar")
+        # saltar_terms_button.click()
+        WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CLASS_NAME,'ItemCardList__item')))
 
-    cards = driver.find_elements(By.CLASS_NAME,"ItemCardList__item")
-    # print(cards)
-    for card in cards:
-        enlace=card.get_attribute('href')
-        try:
-            procesados.index(enlace)
-        except:
-            titulo=card.get_attribute('title')
-            imagen=card.find_element(By.TAG_NAME, "img").get_attribute('src')
-            precio=card.find_element(By.CLASS_NAME, "ItemCard__price").text
-            tb.send_message(cf.telegram_userid,f'<b>TITULO:</b> {titulo}\n<b>PRECIO:</b> {precio}\n<b>ENLACE:</b> {enlace}\n\n<b>IMAGEN:</b> {imagen}',parse_mode='HTML')
-            procesados.append(enlace)
-            haynuevos=True
-    if (haynuevos):
-        with open('procesados.pkl', 'wb') as fp:
-            pickle.dump(procesados, fp)
+        cards = driver.find_elements(By.CLASS_NAME,"ItemCardList__item")
+        # print(cards)
+        for card in cards:
+            enlace=card.get_attribute('href')
+            try:
+                procesados.index(enlace)
+            except:
+                titulo=card.get_attribute('title')
+                imagen=card.find_element(By.TAG_NAME, "img").get_attribute('src')
+                precio=card.find_element(By.CLASS_NAME, "ItemCard__price").text
+                tb.send_message(cf.telegram_userid,f'<b>TITULO:</b> {titulo}\n<b>PRECIO:</b> {precio}\n<b>ENLACE:</b> {enlace}\n\n<b>IMAGEN:</b> {imagen}',parse_mode='HTML')
+                procesados.append(enlace)
+                haynuevos=True
+        if (haynuevos):
+            with open('procesados.pkl', 'wb') as fp:
+                pickle.dump(procesados, fp)
+    except:
+        pass
 
 def main():
     options = webdriver.ChromeOptions()
