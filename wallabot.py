@@ -81,11 +81,11 @@ def main():
         #si hay parametro 1 en linea de comandos se sale
         try:
             sys.argv.index('-1')
-            break
+            return
         except:
             pass
         # esperar 30 segundos hasta siguiente ciclo
-        sleep(30)
+        sleep(cf.espera_entre_ciclos)
 
 
 if __name__ == '__main__':
