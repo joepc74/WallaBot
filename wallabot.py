@@ -52,7 +52,10 @@ def procesa_pagina(driver,entrada):
                 imagen=card.find_element(By.TAG_NAME, "img").get_attribute('src')
                 precio=card.find_element(By.CLASS_NAME, "ItemCard__price").text
                 # enviamos mensaje por telegram
-                tb.send_message(cf.telegram_userid,f'<b>TITULO:</b> {titulo}\n<b>PRECIO:</b> {precio}\n<b>ENLACE:</b> {enlace}\n\n<b>IMAGEN:</b> {imagen}',parse_mode='HTML')
+                try:
+                    sys.argv.index('-nt')
+                except:
+                    tb.send_message(cf.telegram_userid,f'<b>TITULO:</b> {titulo}\n<b>PRECIO:</b> {precio}\n<b>ENLACE:</b> {enlace}\n\n<b>IMAGEN:</b> {imagen}',parse_mode='HTML')
                 #añadimos el enlace
                 procesados.append(enlace)
                 haynuevos=True
@@ -65,7 +68,7 @@ def procesa_pagina(driver,entrada):
 
 def main():
     options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')
+    options.add_argument('--headless=new')
     loop=True
     while(loop):
         driver = webdriver.Chrome(options=options)
