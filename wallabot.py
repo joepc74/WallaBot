@@ -68,7 +68,11 @@ def procesa_pagina(driver,entrada):
 
 def main():
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless=new')
+    # si hay parametro -nh se NO abre en modo headless
+    try:
+        sys.argv.index('-nh')
+    except:
+        options.add_argument('--headless=new')
     loop=True
     while(loop):
         driver = webdriver.Chrome(options=options)
