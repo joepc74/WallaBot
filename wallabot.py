@@ -25,9 +25,12 @@ def login(driver):
     driver.get('https://es.wallapop.com/')
     sleep(2)
     #aceptamos los terminos y condiciones
-    accept_terms_button = driver.find_element("id","onetrust-accept-btn-handler")
-    if(accept_terms_button is not None):
-        accept_terms_button.send_keys(Keys.RETURN)
+    try:
+        accept_terms_button = driver.find_element("id","onetrust-accept-btn-handler")
+        if(accept_terms_button is not None):
+            accept_terms_button.send_keys(Keys.RETURN)
+    except:
+        pass
 
 def procesa_pagina(driver,entrada):
     haynuevos=False
