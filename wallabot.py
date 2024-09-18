@@ -54,6 +54,8 @@ def procesa_pagina(driver,entrada):
                 titulo=card.get_attribute('title')
                 imagen=card.find_element(By.TAG_NAME, "img").get_attribute('src')
                 precio=card.find_element(By.CLASS_NAME, "ItemCard__price").text
+                if precio=='':
+                    precio=card.find_element(By.CLASS_NAME, "item-detail-price_ItemDetailPrice--standard__TxPXr").text
                 # enviamos mensaje por telegram
                 try:
                     sys.argv.index('-nt')
