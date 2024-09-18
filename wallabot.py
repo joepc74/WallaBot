@@ -59,6 +59,7 @@ def procesa_pagina(driver,entrada):
                     sys.argv.index('-nt')
                 except:
                     tb.send_message(cf.telegram_userid,f'<b>TITULO:</b> {titulo}\n<b>PRECIO:</b> {precio}\n<b>ENLACE:</b> {enlace}\n\n<b>IMAGEN:</b> {imagen}',parse_mode='HTML')
+                    print(f'Encontrado: {titulo} PRECIO: {precio}')
                 #añadimos el enlace
                 procesados.append(enlace)
                 haynuevos=True
@@ -78,6 +79,7 @@ def main():
         options.add_argument('--headless=new')
     loop=True
     while(loop):
+        print('Comenzando escaneo...')
         driver = webdriver.Chrome(options=options)
         # preproceso de la web
         login(driver)
@@ -91,7 +93,8 @@ def main():
             return
         except:
             pass
-        # esperar 30 segundos hasta siguiente ciclo
+        # esperar hasta siguiente ciclo
+        print('Esperando '+str(cf.espera_entre_ciclos)+' segundos')
         sleep(cf.espera_entre_ciclos)
 
 
