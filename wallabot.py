@@ -1,5 +1,3 @@
-#!$HOME/.venv/bin/python3
-
 from time import sleep
 import config as cf
 import os,pickle,telebot, sys, logging
@@ -48,7 +46,7 @@ def procesa_pagina(entrada):
                     sys.argv.index('-nt')
                 except:
                     tb.send_message(cf.telegram_userid,f'<b>TITULO:</b> {item['title']}\n<b>PRECIO:</b> {item['price']}\n<b>ENLACE:</b> {item['link']}\n\n<b>IMAGEN:</b> {item['main_image']}',parse_mode='HTML')
-                    print(f'Encontrado: {item['title']} PRECIO: {item['price']}')
+                    logging.info(f'Encontrado: {item['title']} PRECIO: {item['price']}')
                 #añadimos el enlace
                 procesados.append(item['link'])
                 haynuevos=True
