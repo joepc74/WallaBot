@@ -1,3 +1,5 @@
+#!$HOME/.venv/bin/python3
+
 from time import sleep
 import config as cf
 import os,pickle,telebot, sys, logging
