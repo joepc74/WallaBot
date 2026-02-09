@@ -5,7 +5,7 @@ from wallapy import check_wallapop
 
 
 if '-log' in sys.argv:
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', filename='wallabot.log', filemode='a')
 
 # inicializamos telegram bot
 tb = telebot.TeleBot(cf.telegram_key)
@@ -59,7 +59,10 @@ def main():
     while(loop):
         # procesamos los enlaces
         for producto in cf.OFFERS:
-            procesa_pagina(producto)
+            try:
+                procesa_pagina(producto)
+            except Exception as e:
+                logging.error(f"Error procesando producto {producto}: {e}")
         #si hay parametro 1 en linea de comandos se sale
         try:
             sys.argv.index('-1')
