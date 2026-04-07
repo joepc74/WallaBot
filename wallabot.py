@@ -91,11 +91,23 @@ async def procesa_pagina(entrada,chatid):
             pickle.dump(procesados, fp)
 
 ###########################################################
-# Comando mytrackings
+# Comando start y help
 ###########################################################
 @bot.message_handler(commands=['start','help'])
 async def send_start(message):
     await bot.reply_to(message, 'Este bot te permite seguir productos en Wallapop.\nUsa el comando /mytrackings para ver tus seguimientos activos.\nIntroduce el texto de búsqueda para encontrar productos. Puedes usar >precio para filtrar por precio mínimo y <precio para filtrar por precio máximo. Usa -palabra para excluir resultados que contengan esa palabra.')
+
+###########################################################
+# Comando stop
+###########################################################
+@bot.message_handler(commands=['stop'])
+async def send_stop(message):
+    if message.from_user.id != cf.telegram_userid:
+        logging.warning(f"Usuario no autorizado: {message.from_user.id}")
+        await bot.reply_to(message, 'No estás autorizado para usar este comando.')
+        return
+    await bot.reply_to(message, 'Finalizando el bot.')
+    sys.exit(0)
 
 ###########################################################
 # Comando mytrackings
@@ -201,13 +213,14 @@ async def init_db():
 async def main():
     try:
         bot.add_custom_filter(asyncio_filters.StateFilter(bot))
+        await bot.send_message(cf.telegram_userid, "Bot iniciado y listo para recibir comandos.")
         L = await asyncio.gather(
             init_db(),
             actualiza_trackings(),
             bot.polling(non_stop=True)
             )
     finally:
-        bot.close()
+        await bot.close()
 
 if __name__ == '__main__':
     asyncio.run(main())
